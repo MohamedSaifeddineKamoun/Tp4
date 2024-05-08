@@ -15,12 +15,13 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 public class ItemCategoryController {
 
-    @Autowired
+
     private ItemCategoryRepository itemCategoryRepository;
-    @Autowired
+
     private ItemRepository itemRepository;
 
     @GetMapping("/categories")
