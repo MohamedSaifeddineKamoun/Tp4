@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ItemController {
 
+    @Autowired
     private ItemRepository itemRepository;
 
     @GetMapping("/items")
@@ -37,7 +38,7 @@ public class ItemController {
                 .buildAndExpand(savedItem.getId())
                 .toUri();
         //http://localhost:8081/api/v1/items/611b7bcfef59e87f2e0e0d60
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).build(); // to know
     }
 
     @PutMapping("/items/{id}")//full update of all properties
