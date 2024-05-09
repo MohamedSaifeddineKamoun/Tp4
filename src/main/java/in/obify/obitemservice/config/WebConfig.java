@@ -1,4 +1,4 @@
-package in.obify.obitemservice.webConfig;
+package in.obify.obitemservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
