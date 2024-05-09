@@ -1,28 +1,38 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import api from "./api/axiosConfig";
 
-const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+import Layout from "./components/Layout";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import Home from "./components/home/Home";
+function App() {
+  const [items, setItems] = useState([]);
 
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post('/login', { username, password });
-            console.log(response.data); // Handle successful login response
-            // Store session token or user ID securely
-        } catch (error) {
-            console.error('Login failed:', error.response.data); // Handle login failure
-        }
-    };
+  const getItems = async () => {
+    try {
+      const response = await api.get("/");
+      console.log(response.data);
+      setItems(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    return (
-        <div>
-            <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
-            <button onClick={handleLogin}>Login</button>
-        </div>
-    );
-};
+  useEffect(() => {
+    getItems();
+  }, []);
 
-export default Login;
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home books={items} />}></Route>
+        </Route>
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
