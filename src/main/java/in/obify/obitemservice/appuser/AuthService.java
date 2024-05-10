@@ -3,6 +3,7 @@ package in.obify.obitemservice.appuser;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import in.obify.obitemservice.model.UserModel;
 import in.obify.obitemservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class AuthService {
     private UserRepository userRepository;
 
     public boolean authenticate(String username, String password, HttpServletRequest request) {
-        User user = userRepository.findByUsername(username);
+        UserModel user = userRepository.findByUsername(username);
 
         if (user == null || !user.getPassword().equals(password)) {
             return false;

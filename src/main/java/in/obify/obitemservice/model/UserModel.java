@@ -1,16 +1,15 @@
-package in.obify.obitemservice.appuser;
+package in.obify.obitemservice.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Repository;
 
-@Getter
-@Setter
-@Data
 @Document(collection = "User")
-public class User {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserModel {
 
     @Id
     private Long id;

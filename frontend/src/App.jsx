@@ -11,7 +11,7 @@ function App() {
 
   const getItems = async () => {
     try {
-      const response = await api.get("/");
+      const response = await api.get("/items");
       console.log(response.data);
       setItems(response.data);
     } catch (error) {

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Repository
 public class ItemModel {
     @Id
     private String id;
