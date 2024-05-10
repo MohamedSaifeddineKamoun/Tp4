@@ -1,8 +1,8 @@
 import Hero from "../hero/Hero";
-const Home = ({ books }) => {
+const Home = ({ items }) => {
   return (
     <>
-      <Hero books={books} />
+      <Hero items={items} />
     </>
   );
 };

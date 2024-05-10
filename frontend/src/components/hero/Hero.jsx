@@ -4,21 +4,21 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const Hero = ({ books }) => {
+const Hero = ({ items }) => {
   return (
     <div className="flex gap-3">
-      {books.map((book) => {
+      {items.map((item) => {
         return (
-          <div className="book-card-container">
+          <div className="item-card-container">
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 300 }}
-                image={book.image}
+                image={item.description}
                 title="green iguana"
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {book.title}
+                  {item.name}
                 </Typography>
               </CardContent>
             </Card>
