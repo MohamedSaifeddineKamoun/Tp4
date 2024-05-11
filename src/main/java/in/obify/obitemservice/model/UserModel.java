@@ -1,21 +1,21 @@
 package in.obify.obitemservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Repository;
 
-@Document(collection = "Item")
+@Document(collection = "User")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemModel {
+public class UserModel {
+
     @Id
     private String id;
-    private String name;
-    private String description;
-    private Double price;
-    private String categoryId;
+    private String username;
+    private String password;
+
 }

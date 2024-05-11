@@ -18,8 +18,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ItemCategoryController {
 
+
     @Autowired
     private ItemCategoryRepository itemCategoryRepository;
+
     @Autowired
     private ItemRepository itemRepository;
 
