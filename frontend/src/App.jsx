@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Home from "./components/home/Home";
 import Register from "@/components/Register.jsx";
+import Login from "./components/Login.jsx"
 function App() {
   const [items, setItems] = useState([]);
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home items={items} />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
         </Route>
       </Routes>
     </div>

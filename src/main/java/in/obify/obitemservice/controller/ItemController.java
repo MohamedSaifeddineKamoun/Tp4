@@ -1,14 +1,19 @@
 package in.obify.obitemservice.controller;
 
+import in.obify.obitemservice.appuser.AuthService;
 import in.obify.obitemservice.model.ItemModel;
+import in.obify.obitemservice.model.UserModel;
 import in.obify.obitemservice.repository.ItemRepository;
+import in.obify.obitemservice.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.util.List;
 
@@ -18,10 +23,54 @@ public class ItemController {
 
     @Autowired
     private ItemRepository itemRepository;
-
+    @Autowired
+    private AuthService authService;
+    @Autowired
+    private MongoTemplate mongoTemplate;
+    @PostMapping("/register")
+    public String register(@RequestBody UserModel user) {
+        mongoTemplate.save(user);
+        return "User registered successfully!";
+    }
+    @PostMapping("/login")
+    public String login(@RequestBody UserModel user, HttpServletRequest request) {
+        if (authService.authenticate(user.getUsername(), user.getPassword(), request)) {
+            return "Logged in successfully!";
+        } else {
+            return "Invalid credentials!";
+        }
+    }
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    public boolean authenticate(String username, String password, HttpServletRequest request) {
+//        UserModel user = userRepository.findByUsername(username);
+//        HttpSession session = request.getSession(false);
+//
+//        if (session == null) {
+//            session = request.getSession(true);
+//        }
+//
+//        session.setAttribute("userId", user.getId());
+//        System.out.println("User " + user.getUsername() + " added to session: " + session.getId());
+//
+//        return true;
+//    }
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        authService.logout(request);
+        return "Logged out successfully!";
+    }
     @GetMapping("/items")
-    public List<ItemModel> getAllItems() {
-        return itemRepository.findAll();
+
+    public ResponseEntity<List<ItemModel>> getAllItems(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("userId") == null) {
+            System.out.println(session);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        System.out.println("you are authenticated !!!");
+        return new ResponseEntity<>(itemRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/items/{id}")
