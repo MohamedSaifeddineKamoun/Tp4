@@ -6,14 +6,13 @@ server:
 spring:
   application:
     name: el Debbo
-  #main:
-  #  banner-mode: off
-  #  web-application-type: none
   data:
     mongodb:
       database: items-service-db
       uri: mongodb+srv://khalil:NIhnpSnrYbFHhHJ8@booksapi.3jfawpd.mongodb.net
-  #datasource:
-  #  password: password
-  #  url: jdbc:postgresql://localhost:5432/registration
-  #  username: postgres
+  session:
+    mongodb:
+      collection-name: sessions
+  devtools:
+    restart:
+      enabled: true

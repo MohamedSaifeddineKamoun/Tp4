@@ -7,11 +7,13 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+
 @Document(collection = "User")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserModel {
+public class UserModel implements Serializable {
 
     @Id
     private String id;
