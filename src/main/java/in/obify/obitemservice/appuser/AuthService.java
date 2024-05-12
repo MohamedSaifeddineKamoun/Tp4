@@ -14,15 +14,19 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticate(String username, String password, HttpServletRequest request) {
-        UserModel user = userRepository.findByUsername(username);
-        HttpSession session = request.getSession();
+//    public boolean authenticate(String username, String password, HttpServletRequest request) {
+//        UserModel user = userRepository.findByUsername(username);
+//        if (user!= null && user.getPassword().equals(password)) {
+//            HttpSession session = request.getSession();
+//            session.setAttribute("userId", user.getId());
+//            System.out.println("User " + user.getUsername() + " added to session: " + session.getAttribute("userId"));
+//            return true;
+//        } else {
+//            return false;
+//        }
+//
+//    }
 
-        session.setAttribute("userId", user.getId());
-        System.out.println("User " + user.getUsername() + " added to session: " + session.getId());
-
-        return true;
-    }
     public Long getUserId(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {

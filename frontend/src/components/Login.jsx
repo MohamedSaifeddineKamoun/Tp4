@@ -14,10 +14,10 @@ const Login = () => {
                 .then(function (response) {
                     console.log(response);
                     // Login successful, redirect to protected route
-                    window.location.href = '/';
+                   // window.location.href = '/';
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log("there is an error" + error);
                 });
         }catch (error) {
             console.error(error)
