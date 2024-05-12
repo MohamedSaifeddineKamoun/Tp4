@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,48 +31,55 @@ public class ItemController {
     private MongoTemplate mongoTemplate;
     @PostMapping("/register")
     public String register(@RequestBody UserModel user) {
-        mongoTemplate.save(user);
+        mongoTemplate.save(user); // userRepository.save(user) mais il faut l'importer
         return "User registered successfully!";
     }
     @PostMapping("/login")
-    public String login(@RequestBody UserModel user, HttpServletRequest request) {
-        if (authService.authenticate(user.getUsername(), user.getPassword(), request)) {
+    public String login(@RequestBody UserModel user, HttpServletRequest request, HttpSession session) {
+        if (authenticate(user.getUsername(), user.getPassword(), request)) {
             return "Logged in successfully!";
         } else {
             return "Invalid credentials!";
         }
     }
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//    public boolean authenticate(String username, String password, HttpServletRequest request) {
-//        UserModel user = userRepository.findByUsername(username);
-//        HttpSession session = request.getSession(false);
-//
-//        if (session == null) {
-//            session = request.getSession(true);
-//        }
-//
-//        session.setAttribute("userId", user.getId());
-//        System.out.println("User " + user.getUsername() + " added to session: " + session.getId());
-//
-//        return true;
-//    }
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        authService.logout(request);
-        return "Logged out successfully!";
+    @Autowired
+    UserRepository userRepository;
+    public boolean authenticate(String username, String password, HttpServletRequest request) {
+        UserModel user = userRepository.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            // Consistent session retrieval
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                // Create a new session if persistence is not configured
+                session = request.getSession(true);  // Only create a new session if needed
+                System.out.println("New session created for user: " + user.getUsername());
+            }
+            session.setAttribute("userId", user.getId());
+            System.out.println("User " + user.getUsername() + " added to session: " + session.getAttribute("userId"));
+            return true;
+        } else {
+            return false;
+        }
     }
     @GetMapping("/items")
 
     public ResponseEntity<List<ItemModel>> getAllItems(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
-            System.out.println(session);
+        System.out.println(session);
+        if (session == null || session.getAttribute("userId") == null ) {
+            if (session != null)
+                System.out.println(" session id  is" + session.getAttribute("userId"));
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         System.out.println("you are authenticated !!!");
         return new ResponseEntity<>(itemRepository.findAll(), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        authService.logout(request);
+        return "Logged out successfully!";
     }
 
     @GetMapping("/items/{id}")
