@@ -15,7 +15,7 @@ const Register = () => {
         }
         // Send request to server to create new user
         try {
-            api.post('/register', {
+            api.post('/api/v1/register', {
                 username: username,
                 password: password
             })

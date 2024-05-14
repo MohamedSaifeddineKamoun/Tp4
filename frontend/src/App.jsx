@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import api from "./api/axiosConfig";
+import api from "./api/axiosConfig.js";
 
 import Layout from "./components/Layout";
 import "bootstrap/dist/css/bootstrap.min.css";

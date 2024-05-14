@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserModel implements Serializable {
+public class UserModel implements Serializable {//serializable pour devenir un bean
 
     @Id
     private String id;

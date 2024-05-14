@@ -17,11 +17,12 @@ public class AuthService {
     public boolean authenticate(String username, String password, HttpServletRequest request) {
         UserModel user = userRepository.findByUsername(username);
         HttpSession session = request.getSession();
-
         session.setAttribute("userId", user.getId());
         System.out.println("User " + user.getUsername() + " added to session: " + session.getId());
-
-        return true;
+        if(user.getPassword().compareTo(password)==0)
+            return true;
+        else
+            return false;
     }
     public Long getUserId(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

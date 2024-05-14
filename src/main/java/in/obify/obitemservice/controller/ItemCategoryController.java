@@ -1,5 +1,5 @@
 package in.obify.obitemservice.controller;
-
+    
 import in.obify.obitemservice.model.ItemCategoryModel;
 import in.obify.obitemservice.model.ItemModel;
 import in.obify.obitemservice.repository.ItemCategoryRepository;
@@ -18,10 +18,8 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ItemCategoryController {
 
-
     @Autowired
     private ItemCategoryRepository itemCategoryRepository;
-
     @Autowired
     private ItemRepository itemRepository;
 
